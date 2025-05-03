@@ -3,24 +3,20 @@ using UnityEngine.SceneManagement;
 
 public class Movement : MonoBehaviour
 {
-    // متغیرهای عمومی برای تنظیمات حرکت و انیمیشن
-    public Animator animator; // کنترل انیمیشن‌های کاراکتر
-    public float speed; // سرعت حرکت کاراکتر
-    private float Move; // مقدار ورودی حرکت افقی
+    public Animator animator;
+    public float speed;
+    private float Move;
 
-    // متغیرهای مربوط به Rigidbody و Collider
-    private Rigidbody2D rb; // مرجع به Rigidbody2D کاراکتر
-    private EdgeCollider2D waterCollider1; // مرجع به اولین Collider رودخانه
-    private EdgeCollider2D waterCollider2; // مرجع به دومین Collider رودخانه
-    public GameObject river1; // آبجکت مربوط به رودخانه 1
-    public GameObject river2; // آبجکت مربوط به رودخانه 2
+    private Rigidbody2D rb;
+    private EdgeCollider2D waterCollider1;
+    private EdgeCollider2D waterCollider2;
+    public GameObject river1;
+    public GameObject river2;
 
-    // متغیرهای مربوط به پرش
-    public float jump; // نیروی پرش
-    public bool isJumping; // بررسی وضعیت پرش (آیا کاراکتر در حال پرش است یا خیر)
+    public float jump;
+    public bool isJumping;
 
-    // متغیر برای بررسی جهت کاراکتر
-    private bool isFacingRight = true; // آیا کاراکتر به سمت راست نگاه می‌کند؟
+    private bool isFacingRight = true;
 
     void Start()
     {
@@ -54,13 +50,13 @@ public class Movement : MonoBehaviour
         {
             rb.AddForce(new Vector2(rb.velocity.x, jump)); // اعمال نیروی پرش
             animator.SetBool("IsJumping", true); // فعال کردن انیمیشن پرش
-            Debug.Log("Jumping"); // نمایش پیام در کنسول
+            Debug.Log("Jumping");
         }
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        // بررسی برخورد با زمین یا آب
+        // بررسی برخورد با زمین یا آب یا بشکه
         if (
             other.gameObject.CompareTag("Ground")
             || other.gameObject.CompareTag("Water")
@@ -82,15 +78,15 @@ public class Movement : MonoBehaviour
             {
                 waterCollider1.enabled = true; // فعال کردن Collider رودخانه 1
                 waterCollider2.enabled = true; // فعال کردن Collider رودخانه 2
-                Debug.Log("Water Colliders Enabled!"); // نمایش پیام در کنسول
+                Debug.Log("Water Colliders Enabled!");
             }
             if (currentScene == "Level3")
             {
                 jump = 6.5f;
-                Debug.Log("Jumping Increased"); // نمایش پیام در کنسول
+                Debug.Log("Jumping Increased");
             }
 
-            Debug.Log("Power Up Activated!"); // نمایش پیام در کنسول
+            Debug.Log("Power Up Activated!");
         }
     }
 
@@ -100,7 +96,7 @@ public class Movement : MonoBehaviour
         if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Water"))
         {
             isJumping = true; // تنظیم وضعیت پرش به حالت فعال
-            Debug.Log("on the fly"); // نمایش پیام در کنسول
+            Debug.Log("on the fly");
         }
     }
 
