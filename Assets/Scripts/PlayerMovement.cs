@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Movement : MonoBehaviour
 {
@@ -60,7 +61,11 @@ public class Movement : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D other)
     {
         // بررسی برخورد با زمین یا آب
-        if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Water"))
+        if (
+            other.gameObject.CompareTag("Ground")
+            || other.gameObject.CompareTag("Water")
+            || other.gameObject.CompareTag("Barrel")
+        )
         {
             isJumping = false; // تنظیم وضعیت پرش به حالت غیر فعال
             animator.SetBool("IsJumping", false); // غیرفعال کردن انیمیشن پرش
@@ -70,8 +75,21 @@ public class Movement : MonoBehaviour
         // بررسی برخورد با الماس
         if (other.gameObject.CompareTag("Diamond"))
         {
-            waterCollider1.enabled = true; // فعال کردن Collider رودخانه 1
-            waterCollider2.enabled = true; // فعال کردن Collider رودخانه 2
+            string currentScene = SceneManager.GetActiveScene().name;
+
+            // بررسی نام صحنه و بارگذاری صحنه بعدی
+            if (currentScene == "Level1")
+            {
+                waterCollider1.enabled = true; // فعال کردن Collider رودخانه 1
+                waterCollider2.enabled = true; // فعال کردن Collider رودخانه 2
+                Debug.Log("Water Colliders Enabled!"); // نمایش پیام در کنسول
+            }
+            if (currentScene == "Level3")
+            {
+                jump = 6.5f;
+                Debug.Log("Jumping Increased"); // نمایش پیام در کنسول
+            }
+
             Debug.Log("Power Up Activated!"); // نمایش پیام در کنسول
         }
     }
