@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class FinishLine : MonoBehaviour
 {
+    public GameObject panel;
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         // بررسی اینکه آیا برخورد با پلیر بوده است
@@ -23,6 +25,21 @@ public class FinishLine : MonoBehaviour
                 // بارگذاری صحنه "Level3"
                 SceneManager.LoadScene("Level3");
                 Debug.Log("Entering Level3!"); // نمایش پیام در کنسول
+            }
+            else if (currentScene == "Level3")
+            {
+                if (!panel.activeSelf)
+                {
+                    Time.timeScale = 0f;
+                    panel.SetActive(true);
+                    Cursor.visible = true;
+                }
+                else
+                {
+                    Time.timeScale = 1f;
+                    panel.SetActive(false);
+                    Cursor.visible = false;
+                }
             }
         }
     }
